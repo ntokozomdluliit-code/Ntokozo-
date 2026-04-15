@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ntokozo Mdluli | Network Security & Forensics</title>
+    <!-- Font Awesome for Icons (Essential for Security/IT look) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --accent: #0066cc;
+            --accent-glow: #00aaff;
+            --border-color: #dee2e6;
+            --terminal-bg: #1e1e1e;
+            --terminal-text: #33ff33;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0a0f16;
+            --text-color: #e6edf3;
+            --card-bg: #161b22;
+            --accent: #2f81f7;
+            --accent-glow: #58a6ff;
+            --border-color: #30363d;
+            --terminal-bg: #0d1117;
+            --terminal-text: #2ea043;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s ease, color 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Header & Theme Toggle */
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .theme-toggle {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--accent);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: var(--accent);
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0 10px;
+        }
+
+        .badge {
+            background: var(--terminal-bg);
+            color: var(--terminal-text);
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1rem 0 1.5rem;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .contact-bar i {
+            margin-right: 8px;
+            color: var(--accent);
+            width: 18px;
+        }
+
+        /* Section Cards */
+        .section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.75rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        h2 i {
+            color: var(--accent);
+            font-size: 1.4rem;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .skill-category ul {
+            list-style: none;
+        }
+
+        .skill-category li {
+            margin-bottom: 0.4rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: baseline;
+        }
+
+        .skill-category li i {
+            color: var(--accent);
+            font-size: 0.8rem;
+            margin-right: 10px;
+            width: 16px;
+        }
+
+        /* Experience & Projects */
+        .project-item, .exp-item {
+            margin-bottom: 1.8rem;
+        }
+
+        .meta {
+            font-size: 0.9rem;
+            color: var(--accent-glow);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .terminal-box {
+            background: var(--terminal-bg);
+            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0 0.5rem;
+            border-left: 4px solid var(--accent);
+            font-family: 'Courier New', monospace;
+        }
+
+        .terminal-box code {
+            color: var(--terminal-text);
+            font-size: 0.9rem;
+        }
+
+        .terminal-box p {
+            color: #ccc;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Certifications List */
+        .cert-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .cert-item {
+            background: rgba(47, 129, 247, 0.1);
+            padding: 0.3rem 1.2rem;
+            border-radius: 30px;
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .section { padding: 1.5rem; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-flex">
+            <div>
+                <h1>Ntokozo Mdluli</h1>
+                <div class="badge-container">
+                    <span class="badge"><i class="fas fa-shield-alt"></i> CompTIA Network+</span>
+                    <span class="badge"><i class="fas fa-search"></i> Security Researcher</span>
+                    <span class="badge"><i class="fas fa-microchip"></i> Digital Forensics</span>
+                    <span class="badge"><i class="fas fa-code"></i> Python/Bash</span>
+                </div>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i> <span>Dark Mode</span>
+            </button>
+        </div>
+
+        <div class="contact-bar">
+            <span><i class="fas fa-map-pin"></i> Richards Bay, KZN</span>
+            <span><i class="fas fa-phone-alt"></i> 068 436 0966</span>
+            <span><i class="fas fa-envelope"></i> ntokozoomdluli.it@gmail.com</span>
+            <span><i class="fas fa-check-circle"></i> Available Immediately</span>
+        </div>
+
+        <!-- Professional Summary -->
+        <div class="section">
+            <h2><i class="fas fa-user-secret"></i> Professional Summary</h2>
+            <p style="font-size: 1.05rem;">
+                CompTIA Network+ certified IT professional based in Richards Bay with freelance experience as an IT Network Technician since 2023. 
+                Trained through the Cisco Networking Academy in Ethical Hacking, Cybersecurity, IoT, and Data Analysis. 
+                <strong>Actively engaged in security research and digital forensics within a personal home lab</strong>, 
+                running media servers, Docker containers, and virtualized networks. Proficient in Python and Bash for automation, 
+                with a focus on network forensics and log analysis.
+            </p>
+        </div>
+
+        <!-- Technical Skills (Two Columns) -->
+        <div class="section">
+            <h2><i class="fas fa-terminal"></i> Technical Arsenal</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3><i class="fas fa-chart-bar"></i> Data & Analytics</h3>
+                    <ul>
+                        <li><i class="fas fa-angle-right"></i> Excel (Pivot, VLOOKUP)</li>
+                        <li><i class="fas fa-angle-right"></i> Data Cleaning & Visualization</li>
+                        <li><i class="fas fa-angle-right"></i> SQL Fundamentals</li>
+                        <li><i class="fas fa-angle-right"></i> Report Generation</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-network-wired"></i> Networking</h3>
+                    <ul>
+                        <li><i class="fas fa-angle-right"></i> TCP/IP, OSI, DNS, DHCP</li>
+                        <li><i class="fas fa-angle-right"></i> Subnetting, Routing/Switching</li>
+                        <li><i class="fas fa-angle-right"></i> Cisco Packet Tracer</li>
+                        <li><i class="fas fa-angle-right"></i> Troubleshooting (Wireshark)</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-lock"></i> Security & Forensics</h3>
+                    <ul>
+                        <li><i class="fas fa-angle-right"></i> Traffic Analysis (Wireshark/tcpdump)</li>
+                        <li><i class="fas fa-angle-right"></i> Vulnerability Scanning (Nmap)</li>
+                        <li><i class="fas fa-angle-right"></i> Phishing Detection & CIA Triad</li>
+                        <li><i class="fas fa-angle-right"></i> IoT Security & Segmentation</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3><i class="fas fa-server"></i> Infrastructure</h3>
+                    <ul>
+                        <li><i class="fas fa-angle-right"></i> Docker & Containerization</li>
+                        <li><i class="fas fa-angle-right"></i> Linux Command Line</li>
+                        <li><i class="fas fa-angle-right"></i> Python & Bash Scripting</li>
+                        <li><i class="fas fa-angle-right"></i> Virtualized Networks</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Experience & Home Lab (Combined) -->
+        <div class="section">
+            <h2><i class="fas fa-briefcase"></i> Experience & Home Lab</h2>
+            
+            <div class="exp-item">
+                <div class="meta"><i class="fas fa-calendar-alt"></i> 2023 - Present · Richards Bay</div>
+                <h3>Freelance IT Network Technician</h3>
+                <p>Provide on-site and remote support to residential and small business clients. Perform network installations (router config, AP setup, structured cabling). Troubleshoot connectivity using TCP/IP diagnostics, firewall configuration, and IoT device segmentation. Document network layouts and train users on phishing awareness.</p>
+            </div>
+
+            <div class="terminal-box">
+                <p><i class="fas fa-flask"></i> <strong>HOME LAB ENVIRONMENT (Security & Forensics Focus)</strong></p>
+                <code>
+                > Home Media Server & Docker Environment<br>
+                > Services: Reverse Proxy, Internal DNS, Network Monitoring<br>
+                > Automation: Python/Bash scripts for log rotation, health checks, and backup<br>
+                > Virtualized Network Lab: Simulated topologies for firewall testing and segmentation<br>
+                > Forensics Practice: Traffic capture analysis with Wireshark & tcpdump; log parsing with Python.
+                </code>
+            </div>
+        </div>
+
+        <!-- Projects & Security Research -->
+        <div class="section">
+            <h2><i class="fas fa-bug"></i> Security Research & Projects</h2>
+            
+            <div class="project-item">
+                <h3>Network Security Baseline Assessment</h3>
+                <p>Designed enterprise topology in Cisco Packet Tracer. Applied subnetting to segment IoT traffic from corporate data. Performed reconnaissance (Ethical Hacker methodology) to identify open ports and produced a technical security report with firewall rule recommendations.</p>
+            </div>
+
+            <div class="project-item">
+                <h3>Phishing Susceptibility Analysis</h3>
+                <p>Developed dataset simulating employee responses to phishing campaigns. Cleaned raw data and calculated department risk scores using Excel Pivot Tables. Designed executive dashboard to highlight high-risk departments for targeted training.</p>
+            </div>
+
+            <div class="project-item">
+                <h3>IoT Vulnerability Documentation</h3>
+                <p>Researched security flaws in consumer IoT (smart cameras, routers). Documented risks of default credentials and unencrypted protocols. Recommended VLAN segmentation as primary mitigation based on Network+ principles.</p>
+            </div>
+            
+            <div class="project-item">
+                <h3><i class="fas fa-search"></i> Forensic Analysis (Home Lab)</h3>
+                <p>Regular practice capturing PCAP files from virtualized networks. Analyze traffic patterns for indicators of compromise (IoC) and unauthorized data exfiltration attempts. Correlate logs using Bash scripts to simulate incident response workflows.</p>
+            </div>
+        </div>
+
+        <!-- Certifications & Education -->
+        <div class="section">
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+                <div style="flex: 2; min-width: 250px;">
+                    <h2><i class="fas fa-certificate"></i> Certifications</h2>
+                    <div class="cert-list">
+                        <span class="cert-item">CompTIA Network+ (Certified)</span>
+                        <span class="cert-item">Cisco Ethical Hacker</span>
+                        <span class="cert-item">Intro to Cybersecurity</span>
+                        <span class="cert-item">Intro to IoT</span>
+                        <span class="cert-item">Network Technician</span>
+                        <span class="cert-item">Junior Data Analyst</span>
+                    </div>
+                    <p style="margin-top: 1rem; font-size: 0.9rem;"><i class="fas fa-check-circle" style="color: var(--accent);"></i> Certificates available for verification upon request.</p>
+                </div>
+                <div style="flex: 1;">
+                    <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                    <p><strong>Cisco Networking Academy</strong><br>Network Technician, Data Analyst, Ethical Hacker Tracks</p>
+                    <p><strong>Isiphephelo High School</strong><br>Matric / National Senior Certificate</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <i class="fas fa-code-branch"></i> Built for GitHub Pages | Ntokozo Mdluli © 2024 | <i class="fas fa-shield-halved"></i> #SecurityResearch #Forensics
+        </div>
+    </div>
+
+    <script>
+        // Dark Mode Toggle Logic
+        const toggleBtn = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') ? localStorage.getItem('theme') : null;
+        
+        if (currentTheme) {
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            if (currentTheme === 'dark') {
+                toggleBtn.innerHTML = '<i class="fas fa-sun"></i> <span>Light Mode</span>';
+            }
+        } else {
+            // Default to light, but you can set to dark if you prefer: document.documentElement.setAttribute('data-theme', 'dark');
+        }
+
+        toggleBtn.addEventListener('click', function() {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                toggleBtn.innerHTML = '<i class="fas fa-moon"></i> <span>Dark Mode</span>';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                toggleBtn.innerHTML = '<i class="fas fa-sun"></i> <span>Light Mode</span>';
+            }    
+        });
+    </script>
+</body>
+</html>
